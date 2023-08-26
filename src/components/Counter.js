@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
+// Importing Reducers.Actions from the STORE
 import {increase, decrease} from '../store/counterSlice'
 import { login, logout } from '../store/authSlice'
 
@@ -22,6 +23,19 @@ const Counter = () => {
             dispatch(login())
         }
     }
+
+    const counterHandler = useCallback((type, value) => {
+        if (type === 'increase') {
+            dispatch(increase(value))
+        } else if (type === 'decrease') {
+            dispatch(decrease(value))
+        }
+    }, [dispatch])
+
+
+    useEffect(() => {
+         counterHandler('increase', 20)
+    }, [])
     
 
     return (
@@ -33,10 +47,10 @@ const Counter = () => {
                         <>
                             <div className='counter'>Counter: { globalState.counter.value }</div>
                             
-                            <button className='btn' onClick={() => dispatch(increase(2))}>
+                            <button className='btn' onClick={ () => counterHandler('increase', 5) }>
                                 increase +
                             </button>
-                            <button className='btn danger' onClick={() => dispatch(decrease(2))}>
+                            <button className='btn danger' onClick={ () => counterHandler('decrease', 5) }>
                                 decrease -
                             </button>
                         </>
@@ -52,7 +66,7 @@ const Counter = () => {
                         onClick={ () => authHandler(isLoggedIn()) }
                     >
                         {
-                            globalState.auth.isLoggedIn ? 'logout' : 'login'
+                            isLoggedIn() ? 'logout' : 'login'
                         }
                     </button>
                 </div>
