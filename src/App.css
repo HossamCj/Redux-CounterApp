@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: Tahoma;
 }
 
 .btn {
@@ -21,4 +22,8 @@
 .hide {
   background-color: black;
   color: #FFF
+}
+
+.success {
+  background-color: lightseagreen;
 }
