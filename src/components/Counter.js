@@ -18,7 +18,7 @@ const Counter = () => {
 
     const authHandler = (status) => {
         if (status) {
-            dispatch(logout())
+            dispatch(logout(5))
         } else {
             dispatch(login())
         }
